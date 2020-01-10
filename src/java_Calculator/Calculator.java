@@ -9,7 +9,8 @@ public class Calculator {
 	private Stack tokenStack = new Stack();
 	private Stack exprStack = new Stack();
 	private List postOrderList = new ArrayList();
-
+	
+	//여기서 부터 수정해야 할듯
 	private void makeTokens(String s) {
 		StringBuffer tokenBuf = new StringBuffer();
 		int argSize = s.length();
@@ -26,6 +27,7 @@ public class Calculator {
 						tokenStack.push(tokenBuf.toString());
 						tokenBuf = new StringBuffer();
 					}
+					//왜 두번 하지 ? 
 					tokenStack.push(token);
 				}
 			}
@@ -62,7 +64,8 @@ public class Calculator {
 	 */
 	private boolean isOpcode(String s) {
 		boolean opcode = isDelim(s);
-
+		
+		//isDelim에서 ( ) 검사 해 놓고 왜 한번 더 하지 ? 
 		if ("(".equals(s) || ")".equals(s)) {
 			opcode = false;
 		}
