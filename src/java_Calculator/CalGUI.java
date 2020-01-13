@@ -148,8 +148,8 @@ public class CalGUI extends JFrame implements ActionListener {
 				}
 				else {
 					//setText 안에는 문자열이 들어가니까
-					jf.setText((int)result+"");
-					jfsum.setText((int)result+"");
+					jf.setText(result+"");
+					jfsum.setText(result+"");
 				}
 				//=을 쓰고 나서는 초기화
 				check = 0;

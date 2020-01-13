@@ -15,8 +15,22 @@ public class Calculator {
 		StringBuffer tokenBuf = new StringBuffer();
 		int argSize = s.length();
 		String token = null;
+		//소수점 들어왓을 때 구분하기 위해서
+		int j = 0;
 		for (int i = 0; i < argSize; i++) {
 			token = s.substring(i, i + 1);
+			//소수점이 들어온 경우
+			if(token.equals(".")) {
+				j = i;
+			}
+			if(i == j +1) {
+				String tempA = token;
+				String tempB = tokenStack.pop().toString();
+				String tempC = tokenStack.pop().toString();
+				String RealNum = tempC + tempB + tempA;
+				tokenStack.push(RealNum);
+				j = 0;
+			}else {
 			//연산자가 아니면 tokenBuf 추가
 			if (!isDelim(token)) {
 				tokenBuf.append(token);
@@ -34,6 +48,8 @@ public class Calculator {
 			else {
 				tokenStack.push(token);
 			}
+			
+		  }
 		}
 
 	}
