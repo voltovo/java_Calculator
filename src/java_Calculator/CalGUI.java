@@ -138,7 +138,8 @@ public class CalGUI extends JFrame implements ActionListener {
 				break;
 				
 			case "=":
-				c.cal(jfsum.getText());
+				//두번 게산하는 이유가 뭐지 ? 
+				//c.cal(jfsum.getText());
 				double result = c.cal(jfsum.getText());
 				if(soch==1) {
 					//setText 안에는 문자열이 들어가니까
@@ -160,13 +161,13 @@ public class CalGUI extends JFrame implements ActionListener {
 	JTextField jfsum;
 	JTextField jf;
 	
-	String[] str = {"=",".","/","0","1","2","3","4","5","6","7","8","9","←","x2","√","mc","+","-","*"};
+	String[] str = {"←","√","mc","x2","+","7","8","9","-","4","5","6","*","1","2","3","/","0",".","="};
 	JButton[] b = new JButton[20];
 	JButton clear;
 	//폰트 설정
-	Font jffont = new Font("arian", Font.BOLD, 40);
+	Font jffont = new Font("Serif", Font.BOLD, 40);
 	//폰트 설정
-	Font bfont = new Font("arian", Font.BOLD, 20);
+	Font bfont = new Font("Serif", Font.BOLD, 20);
 	
 	CalGUI(){
 		//이름
@@ -252,5 +253,6 @@ public class CalGUI extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 		CalGUI c= new CalGUI();
 		c.setVisible(true);
+		c.jf.setText("0");
 	}
 }
