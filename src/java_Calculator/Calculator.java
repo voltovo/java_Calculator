@@ -9,16 +9,32 @@ public class Calculator {
 	private Stack tokenStack = new Stack();
 	private Stack exprStack = new Stack();
 	private List postOrderList = new ArrayList();
-
+	
+	//여기서 부터 수정해야 할듯
 	private void makeTokens(String s) {
 		StringBuffer tokenBuf = new StringBuffer();
 		int argSize = s.length();
 		String token = null;
+		//소수점 들어왓을 때 구분하기 위해서
+		int j = 0;
 		for (int i = 0; i < argSize; i++) {
 			token = s.substring(i, i + 1);
+			//소수점이 들어온 경우
+			if(token.equals(".")) {
+				j = i;
+			}
+			if(i == j +1) {
+				String tempA = token;
+				String tempB = tokenStack.pop().toString();
+				String tempC = tokenStack.pop().toString();
+				String RealNum = tempC + tempB + tempA;
+				tokenStack.push(RealNum);
+				j = 0;
+			}else {
+			//연산자가 아니면 tokenBuf 추가
 			if (!isDelim(token)) {
 				tokenBuf.append(token);
-
+			
 				if (i == argSize - 1) {
 					tokenStack.push(tokenBuf.toString());
 				} else {
@@ -26,9 +42,14 @@ public class Calculator {
 						tokenStack.push(tokenBuf.toString());
 						tokenBuf = new StringBuffer();
 					}
-					tokenStack.push(token);
 				}
 			}
+			//연산자면 바로 tokenStack에 추가
+			else {
+				tokenStack.push(token);
+			}
+			
+		  }
 		}
 
 	}
@@ -60,14 +81,15 @@ public class Calculator {
 	 * 
 	 * @return
 	 */
-	private boolean isOpcode(String s) {
-		boolean opcode = isDelim(s);
-
-		if ("(".equals(s) || ")".equals(s)) {
-			opcode = false;
-		}
-		return opcode;
-	}
+//	private boolean isOpcode(String s) {
+//		boolean opcode = isDelim(s);
+//		
+//		//isDelim에서 ( ) 검사 해 놓고 왜 한번 더 하지 ? 
+//		if ("(".equals(s) || ")".equals(s)) {
+//			opcode = false;
+//		}
+//		return opcode;
+//	}
 	
 	/*
 	 * PostOrder로 변환
@@ -118,7 +140,7 @@ public class Calculator {
 		}
 		
 		//연자일 경우 스택에서 pop하여 낮은 우선순위를 만날때 까지 출력하고 자신을 push
-		if(isOpcode(token)) {
+		if(isDelim(token)) {
 			String opcode = null;
 			while(true) {
 				if(exprStack.isEmpty()) {
@@ -171,7 +193,7 @@ public class Calculator {
 	 */
 	private void calcPostOrder(Stack calcStack) {
 		//연산자가 아니면 게산을 하지 않는다
-		if(!isOpcode((String)calcStack.lastElement())) {
+		if(!isDelim((String)calcStack.lastElement())) {
 			return;
 		}
 		
